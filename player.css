@@ -8,7 +8,7 @@ body {
 }
 .play-pause {
     display:table;
-    margin:45% auto;
+    margin:45vh auto;
 }
 .button {
     font-size:30px;
