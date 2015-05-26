@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><title>bonfire-player</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width", initial-scale=1">
     <link rel="stylesheet" type="text/css" href="player.css">
     <script src="https://fb.me/react-0.13.3.js"></script>
@@ -13,9 +14,9 @@
 </body>
 <footer>
 <script type="text/javascript">
-    $('form.search').keyup(function(event) {
+    $('.search').keyup(function(event) {
         if (event.keyCode == 13) {
-            this.form.submit();
+            this.submit();
             alert('Hello!');
             return false;
         }

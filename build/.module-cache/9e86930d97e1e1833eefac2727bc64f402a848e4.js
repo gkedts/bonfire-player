@@ -21,7 +21,7 @@ var Search = React.createClass({displayName: "Search",
     if (!search) {
       return;
     }
-    React.findDOMNode(this.refs.search).value = '';
+    React.findDomNode(this.refs.search).value = '';
     return;
   },
   render: function() {

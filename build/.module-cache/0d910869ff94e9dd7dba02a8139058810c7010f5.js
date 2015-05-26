@@ -21,7 +21,7 @@ var Search = React.createClass({displayName: "Search",
     if (!search) {
       return;
     }
-    React.findDOMNode(this.refs.search).value = '';
+    React.findDomNode(this.refs.search).value = '';
     return;
   },
   render: function() {
@@ -91,6 +91,27 @@ var InfoPanel = React.createClass({displayName: "InfoPanel",
 });
 var NowPlaying = React.createClass({displayName: "NowPlaying",
   render: function() {
+    return (
+      React.createElement("div", {className: "now-playing"}, 
+        React.createElement(LoadingBar, null), 
+        React.createElement(Buttons, null)
+      )
+    );
+  }
+});
+
+var LoadingBar = React.createClass({displayName: "LoadingBar",
+  render:function() {
+    return (
+      React.createElement("div", {className: "loading"}, 
+        "========================="
+      )
+    );
+  }
+});
+
+var Buttons = React.createClass({displayName: "Buttons",
+  render: function () {
     var playbutton;
     if (this.props.state == "playing") {
       playbutton = React.createElement("div", {className: "button"}, "▮▮");
@@ -99,21 +120,14 @@ var NowPlaying = React.createClass({displayName: "NowPlaying",
       playbutton = React.createElement("div", {className: "button"}, "▶");
     };  
     return (
-      React.createElement("div", {className: "now-playing"}, 
-        React.createElement("div", {className: "loading"}, 
-          "==========================="
-        ), 
-        React.createElement("div", {className: "controls"}, 
-          React.createElement("div", {className: "button"}, "◀▮"), 
-          playbutton, 
-          React.createElement("div", {className: "button", onClick: this.handleClick}, "◼"), 
-          React.createElement("div", {className: "button"}, "▮▶"), 
-          React.createElement("div", {className: "button"}, "∰"), 
-          React.createElement("div", {className: "media-info"}, "=========")
-        )
+      React.createElement("div", {className: "controls"}, 
+        React.createElement("div", {className: "button"}, "◀▮"), 
+        playbutton, 
+        React.createElement("div", {className: "button", onClick: this.alert('Hello!')}, "◼"), 
+        React.createElement("div", {className: "button"}, "▮▶")
       )
     );
-  }
+  },  
 });
 
 React.render(

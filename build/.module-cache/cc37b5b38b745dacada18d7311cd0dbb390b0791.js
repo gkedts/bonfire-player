@@ -27,7 +27,8 @@ var Search = React.createClass({displayName: "Search",
   render: function() {
     return (
       React.createElement("form", {className: "search", onSubmit: this.handleSubmit}, 
-        React.createElement("input", {type: "text", placeholder: "search", ref: "search"})
+        React.createElement("input", {type: "text", placeholder: "search", ref: "search"}), 
+        React.createElement("input", {type: "submit"})
         )
     );
   }

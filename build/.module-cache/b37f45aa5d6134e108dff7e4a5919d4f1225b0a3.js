@@ -21,7 +21,7 @@ var Search = React.createClass({displayName: "Search",
     if (!search) {
       return;
     }
-    React.findDOMNode(this.refs.search).value = '';
+    React.findDomNode(this.refs.search).value = '';
     return;
   },
   render: function() {
@@ -107,9 +107,7 @@ var NowPlaying = React.createClass({displayName: "NowPlaying",
           React.createElement("div", {className: "button"}, "◀▮"), 
           playbutton, 
           React.createElement("div", {className: "button", onClick: this.handleClick}, "◼"), 
-          React.createElement("div", {className: "button"}, "▮▶"), 
-          React.createElement("div", {className: "button"}, "∰"), 
-          React.createElement("div", {className: "media-info"}, "=========")
+          React.createElement("div", {className: "button"}, "▮▶")
         )
       )
     );
