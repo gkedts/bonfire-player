@@ -2,87 +2,20 @@ body {
     margin:0;
     height:100vh;
 }
-#side-panel {
-    width:200px;
-    float:left;
+#main-panel {
     height:100vh;
-    background:#606060;
-    overflow:auto;
-}
-#side-panel .header {
-    padding: 7px;
-    background:#404040;
-    color:#B0B0B0;
-}
-#side-panel .body {
-    margin:7px -7px -7px -7px;
-    padding:5px 20px;
-    background: #606060;
-}
-#side-panel .search {
-    margin:15px auto;
-    border:1px solid #C0C0C0;
-    border-radius:2px;
-    width:85%;
-}
-input {
-    width:96%;
-    padding:2px;
-}
-.main-panel {
-    height:100vh;
-}
-.info-panel {
-    overflow:auto;
-    height:83%;
-}
-
-.now-playing {
-    overflow:auto;
-    height:17%;
-    min-height:100px;
-    background:#404040;
-    color:#B0B0B0;
-}
-
-.loading {
-    margin: 10px;
-    border: 1px solid #D0D0D0;
-}
-
-.controls {
-    margin:10px;
     overflow:hidden;
+}
+.play-pause {
+    display:table;
+    margin:45% auto;
 }
 .button {
-    float:left;
-    margin:10px;
     font-size:30px;
     cursor:pointer;
+    color:#404040;
+    text-align:center;
+    height:40px;
+    width:40px;
 }
 
-.media-info {
-    float:right;
-    margin:0;
-    height:52px;
-    width:52%;
-    overflow:hidden;
-}
-
-.album-art {
-    border:1px solid #D0D0D0;
-    height:50px;
-    width:50px;
-    float:left;
-}
-
-@media screen and (max-width:750px) {
-    #side-panel {
-        position:absolute;
-        left:-200px;
-    }
-}
-@media screen and (max-width:500px) {
-    #side-panel {
-        width:100%;
-    }
