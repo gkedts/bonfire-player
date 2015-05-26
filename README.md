@@ -1,2 +1,2 @@
 # bonfire-player
-A react-based media player front-end for bonfire kitchen
+A media player front-end for bonfire kitchen
