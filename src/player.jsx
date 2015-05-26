@@ -1,6 +1,5 @@
 var Mopidy = require("mopidy");
 var React = require("react");
-var JQuery = require("jquery");
 
 var PlayPause = React.createClass({
   propTypes: {
