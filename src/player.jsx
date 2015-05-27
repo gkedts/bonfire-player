@@ -1,122 +1,74 @@
-var SidePanel = React.createClass({
-  render: function() {
-    var menuNodes = this.props.data.map(function(menu) {
-      return (
-        <Header key={menu.header} body={menu.body}>{menu.header}</Header>
-      );
-    });
-    return (
-      <div className="side-panel">
-        <Search />
-        {menuNodes}
-      </div>
-    );
-  }
-});
+var React = require('react');
+var Mopidy = require('mopidy');
+var _ = require('underscore');
 
-var Search = React.createClass({
-  handleSubmit: function(e) {
-    e.preventDefault();
-    var search = React.findDOMNode(this.refs.search).value.trim();
-    if (!search) {
-      return;
-    }
-    React.findDOMNode(this.refs.search).value = '';
-    return;
+var SidePanel = require('./side-panel.jsx');
+var MainPanel = require('./main-panel.jsx');
+var Tracklist = require('./tracklist.jsx');
+var Track = require('./track.jsx');
+
+var MopidyPlayer = React.createClass({
+  getInitialState: function() {
+    var mopidy = new Mopidy({
+      webSocketUrl: "ws://redox.mit.edu/mopidy/ws/",
+      autoConnect: false,
+    });
+    mopidy.on('state:online', () => {
+      this.setState({connected: true});
+      mopidy.playback.getCurrentTrack().done(
+        track => this.setState({nowPlaying: track}));
+      mopidy.playback.getState().done(
+        state => this.setState({state: state}));
+      mopidy.tracklist.getTlTracks().done(
+        tlTracks => this.setState({tracklist: tlTracks}));
+    });
+    mopidy.on('state:offline', () => this.setState({connected: false}));
+    mopidy.on('event:playbackStateChanged',
+      event => this.setState({state: event.new_state}));
+    mopidy.on('event:trackPlaybackEnded',
+      event => this.setState({nowPlaying: null}));
+    mopidy.on('event:trackPlaybackStarted',
+      event => this.setState({nowPlaying: event.tl_track.track}));
+    mopidy.on('event:tracklistChanged',
+      () => mopidy.tracklist.getTlTracks().done(
+        tlTracks => this.setState({tracklist: tlTracks})));
+    //TODO:
+    // event:trackPlaybackPaused
+    //event:trackPlaybackResumed
+    //event:volumeChanged
+    //event:optionsChanged
+    //event:playlistsLoaded
+
+    window.mopidy = mopidy;
+    mopidy.connect();
+    return {
+      connected: false,
+      state: null,
+      currentTrack: null,
+      tracklist: null,
+      mopidy: mopidy,
+    };
   },
-  render: function() {
-    return (
-      <form className="search" onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="search" ref="search"/>
-        </form>
-    );
-  }
-});
-
-var Header = React.createClass({
-  render: function() {
-    var menuItems = this.props.body.map(function(item) {
-      return (
-        <Body key={item}>{item}</Body>
-      );
-    });
-    return (
-      <div className="header">
-        {this.props.children}
-        {menuItems}
+  render: function () {
+    if (!this.state.connected) {
+      return <div className="loading">loading...</div>;
+    }
+    else {
+      return <div>
+        <SidePanel data={menu} />
+        <MainPanel state={this.state.state} mopidy={this.state.mopidy} tracklist={this.state.tracklist} current={this.state.nowPlaying} />
       </div>
-    );
-  }
+    }
+  },
 });
 
-var Body = React.createClass({
-  render: function() {
-    return (
-      <div className="body">
-        {this.props.children}
-      </div>
-    );
-  }
-});
-
-var menu = [
+var menu = [ 
   {header: "browse", body: ["local files","blah"]},
   {header: "playlists", body: ["playlist1","blahblah"]}
 ];
 
 React.render(
-  <SidePanel data={menu}/>,
-  document.getElementById('side-panel')
+  <MopidyPlayer />,
+  document.body
 );
 
-var MainPanel = React.createClass({
-  render: function() {
-    return (
-      <div className="main-panel">
-        <InfoPanel />
-        <NowPlaying />
-      </div>
-    );
-  }
-});
-
-var InfoPanel = React.createClass({
-  render: function() {
-    return (
-      <div className="info-panel">
-        [insert info panel stuff here]
-      </div>
-    );
-  }
-});
-var NowPlaying = React.createClass({
-  render: function() {
-    var playbutton;
-    if (this.props.state == "playing") {
-      playbutton = <div className="button">▮▮</div>;
-    }   
-    else {
-      playbutton = <div className="button">▶</div>;
-    };  
-    return (
-      <div className="now-playing">
-        <div className="loading">
-          ===========================
-        </div>
-        <div className="controls">
-          <div className="button">◀▮</div>
-          {playbutton}
-          <div className="button" onClick={this.handleClick}>◼</div>
-          <div className="button">▮▶</div>
-          <div className="button">∰</div>
-          <div className="media-info">=========</div>
-        </div>
-      </div>
-    );
-  }
-});
-
-React.render(
-  <MainPanel />,
-  document.getElementById('main-panel')
-);
