@@ -38,12 +38,12 @@ input {
     height:87%;
 }
 
-.tracklist {
+.tracklist,.file-browser {
     overflow:hidden;
     padding:10px;
 }
 
-.track {
+.track,.folder {
     padding:7px 0;
     border:1px solid #D0D0D0;
     overflow:hidden;
@@ -100,7 +100,7 @@ input {
     width:48px;
 }
 
-.song-info {
+.song-info,.folder-info {
     float:left;
     margin:0 0 0 10px;   
     height:48px;
