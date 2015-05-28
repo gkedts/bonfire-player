@@ -7,6 +7,8 @@ var NowPlaying = React.createClass({
   propTypes: {
     state: React.PropTypes.string,
     current: React.PropTypes.object,
+    tracklist: React.PropTypes.arrayOf(
+      React.PropTypes.object),
     mopidy: React.PropTypes.object.isRequired,
   },  
 

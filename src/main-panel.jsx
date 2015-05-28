@@ -7,12 +7,16 @@ var InfoPanel = require('./info-panel.jsx');
 
 var MainPanel = React.createClass({
   propTypes: {
-    full: React.PropTypes.object.isRequired,
+    current: React.PropTypes.object,
+    tracklist: React.PropTypes.arrayOf(
+      React.PropTypes.object),
+    state: React.PropTypes.string,
+    mopidy: React.PropTypes.object.isRequired,
   },
   render: function() {
     return <div className="main-panel">
-      <InfoPanel mopidy={this.props.full.mopidy} tracklist={this.props.full.tracklist} local={this.props.full.localFiles}/>
-      <NowPlaying state={this.props.full.state} mopidy={this.props.full.mopidy} current={this.props.full.current}/>
+      <InfoPanel state={this.props.state} mopidy={this.props.mopidy} tracklist={this.props.tracklist} current={this.props.current}/>
+      <NowPlaying state={this.props.state} mopidy={this.props.mopidy} tracklist={this.props.tracklist} current={this.props.current}/>
     </div>
   },
 });

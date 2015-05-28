@@ -10,7 +10,7 @@ var Track = require('./track.jsx');
 var MopidyPlayer = React.createClass({
   getInitialState: function() {
     var mopidy = new Mopidy({
-      webSocketUrl: "ws://localhost:6680/mopidy/ws/",
+      webSocketUrl: "ws://redox.mit.edu/mopidy/ws/",
       autoConnect: false,
     });
     mopidy.on('state:online', () => {
@@ -21,8 +21,6 @@ var MopidyPlayer = React.createClass({
         state => this.setState({state: state}));
       mopidy.tracklist.getTlTracks().done(
         tlTracks => this.setState({tracklist: tlTracks}));
-      mopidy.library.browse(uri='local:directory').done(
-        local => this.setState({localFiles: local}));
     });
     mopidy.on('state:offline', () => this.setState({connected: false}));
     mopidy.on('event:playbackStateChanged',
@@ -46,7 +44,7 @@ var MopidyPlayer = React.createClass({
     return {
       connected: false,
       state: null,
-      nowPlaying: null,
+      currentTrack: null,
       tracklist: null,
       mopidy: mopidy,
     };
@@ -58,7 +56,7 @@ var MopidyPlayer = React.createClass({
     else {
       return <div>
         <SidePanel data={menu} />
-        <MainPanel full={this.state} />
+        <MainPanel state={this.state.state} mopidy={this.state.mopidy} tracklist={this.state.tracklist} current={this.state.nowPlaying} />
       </div>
     }
   },
